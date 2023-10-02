@@ -95,7 +95,29 @@ def filter_by_date():
 class App:
     def __init__(self, root):
         self.root = root
-        self.root.title("Data Analysis Tool")
+        self.root.title("Welcome to Airbnb Explorer")
+
+        # Title and subtitle labels
+        title_label = tk.Label(root, text="Welcome to Airbnb Explorer", font=("Helvetica", 24, "bold"))
+        title_label.pack(pady=20)
+
+        subtitle_label = tk.Label(root, text="Discover the best listings tailored for you!", font=("Helvetica", 16))
+        subtitle_label.pack(pady=10)
+
+        # Search bar and button
+        search_frame = tk.Frame(root)
+        search_frame.pack(pady=20)
+
+        self.search_entry = ttk.Entry(search_frame, width=50, font=("Helvetica", 14), justify="center")
+        self.search_entry.insert(0, "Search for listings")
+        self.search_entry.pack(side="left", padx=(0, 10))
+
+        search_button = tk.Button(search_frame, text="Search", command=self.search_listings, bg="green", fg="white", font=("Helvetica", 14))
+        search_button.pack(side="right")
+
+        # Canvas for plotting
+        self.canvas_frame = tk.Frame(root)
+        self.canvas_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
         self.nav_frame = tk.Frame(self.root, bg="gray")
         self.nav_frame.pack(side="top", fill="x")
@@ -118,6 +140,13 @@ class App:
         global canvas_frame
         canvas_frame = tk.Frame(self.root)
         canvas_frame.pack(pady=20, padx=20, fill="both", expand=True)
+
+    def search_listings(self):
+        # Perform the search logic here
+        # For demonstration purposes, just displaying a message
+        search_query = self.search_entry.get()
+        messagebox.showinfo("Search Result", f"Searching for: {search_query}")
+
 
     def show_clean_canvas(self):
         for widget in canvas_frame.winfo_children():
@@ -193,6 +222,8 @@ class App:
         global result_text
         result_text = scrolledtext.ScrolledText(canvas_frame, wrap="word", height=10, width=50)
         result_text.pack(pady=20)
+
+    
 
 if __name__ == "__main__":
     calendar_data = pd.read_csv('calendar_dec18.csv')
